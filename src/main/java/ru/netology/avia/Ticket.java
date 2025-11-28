@@ -2,7 +2,7 @@ package ru.netology.avia;
 
 import java.util.Objects;
 
-public class Ticket {
+public class Ticket implements Comparable<Ticket> {
     private String from; // аэропорт откуда
     private String to; // аэропорт куда
     private int price; // цена
@@ -37,6 +37,11 @@ public class Ticket {
         return timeTo;
     }
 
+    /* Метод для расчёта длительности полёта
+    в часах (с потерей точности, это чисто для наглядности в тестах) */
+    public int getDuration() {
+        return (this.getTimeTo() - this.getTimeFrom()) / 3600;
+    }
 
     // Вспомогательные методы для корректной работы equals
     @Override
@@ -50,5 +55,14 @@ public class Ticket {
     @Override
     public int hashCode() {
         return Objects.hash(from, to, price, timeFrom, timeTo);
+    }
+
+    @Override
+    public int compareTo(Ticket o) {
+        if (this.price < o.price) {
+            return -1;
+        } else if (this.price > o.price) {
+            return 1;
+        } else return 0;
     }
 }
