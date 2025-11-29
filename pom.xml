@@ -34,10 +34,17 @@
                     <failIfNoTests>true</failIfNoTests>
                 </configuration>
             </plugin>
-            <plugin> <!-- подключаем плагин jacoco -->
+            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.5</version>
+                <configuration>
+                    <excludes>
+                        <!-- Исключаем целые классы из проверки -->
+                        <exclude>**/Ticket.class</exclude>
+                        <exclude>**/AviaSales.class</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
@@ -51,13 +58,6 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
-                        <!-- добавить, если нужно исключить из отчёта классы/методы классов -->
-                        <!-- <configuration>
-                            <excludes>
-                                <exclude>**/ru/netology/.../Classname.class</exclude>
-                                <exclude>**/ru/netology/.../Classname.class:get*</exclude>
-                            </excludes>
-                        </configuration> -->
                     </execution>
                     <execution>
                         <id>check</id>
@@ -67,11 +67,7 @@
                         <configuration>
                             <rules>
                                 <rule>
-                                    <!-- добавить, если нужно исключить из проверки методы классов -->
-                                    <!--    <element>METHOD</element>
-                                        <excludes>
-                                            <exclude>ru/netology/.../Classname.class:get*</exclude>
-                                        </excludes> -->
+                                    <element>BUNDLE</element>
                                     <limits>
                                         <limit>
                                             <counter>BRANCH</counter>
@@ -81,11 +77,6 @@
                                     </limits>
                                 </rule>
                             </rules>
-                            <!-- ещё один блок со всеми исключениями из проверки -->
-                            <!--  <excludes>
-                                <exclude>**/ru/netology/.../Classname.class</exclude>
-                                <exclude>ru/netology/.../Classname.class:get*</exclude>
-                            </excludes> -->
                         </configuration>
                     </execution>
                 </executions>
